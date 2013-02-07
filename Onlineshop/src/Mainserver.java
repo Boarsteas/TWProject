@@ -1,52 +1,56 @@
 import java.net.*;
 import java.io.*;
 
-public class Mainserver {
-	ServerSocket server= new ServerSocket(1236);
+public class Mainserver extends Thread {
+	private Mainserver server;
+	private Socket client;
+	private int port;
 	
-	Mainserver() throws IOException 
+	public Mainserver(int port) 
 	{
-		while(true)
+		this.port=port;
+		try 
+		 {	
+		
+		server = new Mainserver(port);
+		
+		 }
+		 catch(IOException e)
 		 {
-		Socket client	= server.accept();
-		InputStream input = client.getInputStream();
-		OutputStream output = client.getOutputStream();
-		int zahl1 = input.read();
-		int zahl2 = input.read();
-		output.write(zahl1+zahl2);
-		output.flush();
-		input.close();
-		output.close();
-		 }	 
+			 e.printStackTrace();	 
+		 }
 	}
 
 
-public static void main(String[] args)
+
+
+	public int GetPort()
+	  {
+	    return port;
+	  }
+
+public void Run()
 {
-	 try 
-	 {	
-	@SuppressWarnings("unused")
-	Mainserver server = new Mainserver();
-	
-	 }
-	 catch(IOException e)
+	try{
+	while(true)
 	 {
-	System.out.print(e);	 
+	client= server.accept();
+	new Infostand(client);
+	
+	
+	/*InputStream input = client.getInputStream();
+	OutputStream output = client.getOutputStream();
+	int zahl1 = input.read();
+	int zahl2 = input.read();
+	output.write(zahl1+zahl2);
+	output.flush();
+	input.close();
+	output.close();*/
 	 }
-	 verbindeInfo();
-}
-
-
-public static void verbindeInfo()
-{
-   Thread t1 = null;
-try {
-	t1 = new Thread( new Infostand() );
-} catch (IOException e) {
-	// TODO Auto-generated catch block
-	e.printStackTrace();
-}
-     t1.  start();
-     
-}
+	}
+	catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	}	 
 }

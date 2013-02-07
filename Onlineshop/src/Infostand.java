@@ -2,28 +2,40 @@ import java.net.*;
 import java.io.*;
 
 public class Infostand implements Runnable{
+private Socket server;
+private Thread runner;
+	
 
-	Infostand()throws IOException
+	public Infostand(Socket server)
 	{
-		Socket server = new Socket("localhost",1236);
-		InputStream input = server.getInputStream();
-		OutputStream output = server.getOutputStream();
-		output.write(20);
-		output.write(10);
-		output.flush();
-		System.out.println(input.read());
-		server.close();
-		input.close();
-		output.close();		
+		this.server=server;
+		try
+		{
+			runner = new Thread(this);
+		      runner.start();
+		    }
+		    catch(IOException e)
+		    {
+		    	 e.printStackTrace();	
+		    }
 	}
-	//test
+	
 	public void run()
 	 {
 		try 
 		 {
-		
-		@SuppressWarnings("unused")
-		Infostand infost = new Infostand();
+		/**
+			Socket server = new Socket("localhost",1236);
+			InputStream input = server.getInputStream();
+			OutputStream output = server.getOutputStream();
+			output.write(20);
+			output.write(10);
+			output.flush();
+			System.out.println(input.read());
+			server.close();
+			input.close();
+			output.close();		
+		**/
 		 }
 		 catch(IOException e)
 		 {
