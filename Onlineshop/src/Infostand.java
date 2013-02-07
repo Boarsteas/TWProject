@@ -6,26 +6,19 @@ private Socket server;
 private Thread runner;
 	
 
-	public Infostand(Socket server)
+	public Infostand(Socket server) throws IOException
 	{
 		this.server=server;
-		try
-		{
-			runner = new Thread(this);
-		      runner.start();
-		    }
-		    catch(IOException e)
-		    {
-		    	 e.printStackTrace();	
-		    }
+		runner = new Thread(this);
+		  runner.start();
 	}
 	
 	public void run()
 	 {
 		try 
 		 {
-		/**
-			Socket server = new Socket("localhost",1236);
+			
+			Socket server = new Socket("localhost",Mainserver.GetPort());
 			InputStream input = server.getInputStream();
 			OutputStream output = server.getOutputStream();
 			output.write(20);
@@ -35,7 +28,7 @@ private Thread runner;
 			server.close();
 			input.close();
 			output.close();		
-		**/
+		
 		 }
 		 catch(IOException e)
 		 {

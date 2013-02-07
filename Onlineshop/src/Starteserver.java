@@ -1,11 +1,13 @@
-import java.net.ServerSocket;
+import java.io.IOException;
+
+
 
 
 public class Starteserver {
 	
-	public static void main(String args[])
+	public static void main(String args[]) throws IOException
 	  {
-	    ServerSocket app = new ServerSocket(1236);
+	    Mainserver app = new Mainserver(1236);
 	    app.start();
 	    
 	    System.out.println("Listening on port " + app.GetPort() + " ...");

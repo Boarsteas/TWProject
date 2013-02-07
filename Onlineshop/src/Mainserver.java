@@ -4,27 +4,18 @@ import java.io.*;
 public class Mainserver extends Thread {
 	private Mainserver server;
 	private Socket client;
-	private int port;
+	private static int port;
 	
-	public Mainserver(int port) 
+	public Mainserver(int port) throws IOException 
 	{
 		this.port=port;
-		try 
-		 {	
-		
 		server = new Mainserver(port);
-		
-		 }
-		 catch(IOException e)
-		 {
-			 e.printStackTrace();	 
-		 }
 	}
 
 
 
 
-	public int GetPort()
+	public static int GetPort()
 	  {
 	    return port;
 	  }
