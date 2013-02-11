@@ -21,9 +21,9 @@ public class Client {
 	      //  String text = in.readLine();
 	       // System.out.println(text);
 	        out.println("Ja hallo ich bin da");
-	        out.close();
-		    in.close();
-	        clientSocket.close(); 
+	        //out.close();
+		    //in.close();
+	       // clientSocket.close(); 
 	}
 		
 	}

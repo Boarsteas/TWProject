@@ -17,9 +17,9 @@ public class mainServer {
 	            Socket clientSocket = serverSocket.accept();
 	            ThreadServer mini = new ThreadServer(clientSocket);
 	            mini.start();
-	            
+	            break;
 	        }       
-	        serverSocket.close();
+	       // serverSocket.close();
 	    }
 	 
 
