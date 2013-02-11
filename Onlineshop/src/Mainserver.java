@@ -1,4 +1,32 @@
+import java.io.*;
 import java.net.*;
+public class Mainserver {
+
+    public static void main(String[] args) throws IOException {
+
+        ServerSocket serverSocket = null;
+
+        boolean listeningSocket = true;
+        try {
+            serverSocket = new ServerSocket(2343);
+        } catch (IOException e) {
+            System.err.println("Could not listen on port: 2343");
+        }
+
+        while(listeningSocket){
+            Socket clientSocket = serverSocket.accept();
+            Starteserver mini = new Starteserver(clientSocket);
+            mini.start();
+        }
+        serverSocket.close();       
+    }
+
+}
+
+
+
+
+/*import java.net.*;
 import java.io.*;
 
 public class Mainserver extends Thread {
@@ -36,12 +64,12 @@ public void Run()
 	output.write(zahl1+zahl2);
 	output.flush();
 	input.close();
-	output.close();*/
+	output.close();
 	 }
-	}
+	 }
 	catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	}	 
-}
+}*/

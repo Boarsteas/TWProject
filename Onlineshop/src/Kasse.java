@@ -14,7 +14,7 @@ public class Kasse {
 		System.out.println(input.read());
 		server.close();
 		input.close();
-		output.close();		
+		output.close();
 	}
 	
 	public static void main(String[] args)

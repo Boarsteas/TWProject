@@ -1,4 +1,32 @@
+
+
+import java.io.*;
 import java.net.*;
+
+class Infostand {
+    public static void main(String argv[]) throws Exception {
+        String sentence;
+        String modifiedSentence;
+      while(true){
+        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
+
+        Socket clientSocket = new Socket("myname.domain.com", 2343);
+
+        DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
+        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+        System.out.println("Ready");
+        sentence = in.readLine();
+        out.writeBytes(sentence + '\n');
+        modifiedSentence = in.readLine();
+        System.out.println(modifiedSentence);
+       }
+      
+    }
+}
+
+
+/*import java.net.*;
 import java.io.*;
 
 public class Infostand implements Runnable{
@@ -39,4 +67,4 @@ private Thread runner;
 
 
 	
-}
+}*/
