@@ -1,6 +1,5 @@
 import java.net.*;
 import java.io.*;
-import java.util.*;
 
 public class ThreadServer extends Thread {
 	 private PrintWriter out = null;
@@ -25,9 +24,28 @@ public class ThreadServer extends Thread {
 		try {
 			//if (!in.ready())
 			
-			System.out.println("\n hi bin der Server. Bist du da Client?");
-			String text = in.readLine();
-			System.out.println(text);
+			System.out.println("hi bin der Server. Bist du da Client?");
+			String Id = in.readLine();
+			int intId = Integer.parseInt(Id);
+			if(intId>500 && intId<1000)
+			{
+			out.println("Bitte Passwort angeben: \n>");
+			String pw =in.readLine();
+			
+			if(pw.contains("123456") )
+			{
+				out.println("Ready");
+			}
+			else
+			{
+				out.println("Falsch Idiot");
+			}
+			
+			}
+			else
+			{
+				
+			}
 			Thread.sleep(2000);
 			out.close();
 		    in.close();

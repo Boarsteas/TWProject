@@ -1,12 +1,15 @@
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 
-public class Client {
+public class Kasse {
 	private PrintWriter out = null;
 	 private BufferedReader in = null;
 	Socket clientSocket=null;
+	Scanner sc =new Scanner(System.in);
+	private int id =600;
 	
-	Client() throws IOException
+	Kasse() throws IOException
 	{
 		while(true)
 		{
@@ -17,10 +20,12 @@ public class Client {
  			    new InputStreamReader(
  			    		clientSocket.getInputStream()));
 
-	        
+ 		
+ 		
 	      //  String text = in.readLine();
 	       // System.out.println(text);
-	        out.println("Ja hallo ich bin da");
+	        out.println(id);
+	        anmelden();
 	        //out.close();
 		    //in.close();
 	        break;
@@ -29,13 +34,39 @@ public class Client {
 		clientSocket.close();
 	}
 	
+	
+	public void anmelden() throws IOException
+	{
+		String text = in.readLine();
+		System.out.println(text);
+ 		String pw =sc.next();	
+ 		out.println(pw);
+	
+	
+	}
+	
+	public void bezahlen()
+	{
+		
+	}
+	
+	public void eingabeW()
+	{
+		
+	}
+	
+	public void loschenW()
+	{
+	
+	}
+	
 	public static void main(String[] args)
 	 {
 		 try 
 		 {
 		
 		@SuppressWarnings("unused")
-		Client client = new Client();
+		Kasse client = new Kasse();
 		 }
 		 catch(IOException e)
 		 {

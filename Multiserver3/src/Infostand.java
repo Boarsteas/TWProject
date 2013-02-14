@@ -1,12 +1,12 @@
 import java.io.*;
 import java.net.*;
 
-public class Client {
+public class Infostand {
 	private PrintWriter out = null;
 	 private BufferedReader in = null;
 	Socket clientSocket=null;
 	
-	Client() throws IOException
+	Infostand() throws IOException
 	{
 		while(true)
 		{
@@ -35,7 +35,7 @@ public class Client {
 		 {
 		
 		@SuppressWarnings("unused")
-		Client client = new Client();
+		Infostand client = new Infostand();
 		 }
 		 catch(IOException e)
 		 {
