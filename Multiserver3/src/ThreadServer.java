@@ -1,4 +1,5 @@
 import java.net.*;
+import java.sql.ResultSet;
 import java.io.*;
 
 public class ThreadServer extends Thread {
@@ -24,17 +25,20 @@ public class ThreadServer extends Thread {
 		try {
 			//if (!in.ready())
 			
-			System.out.println("hi bin der Server. Bist du da Client?");
+			
 			String Id = in.readLine();
 			int intId = Integer.parseInt(Id);
 			if(intId>500 && intId<1000)
 			{
-			out.println("Bitte Passwort angeben: \n>");
+			out.println("Bitte vierstelligen Passwort eingeben:");
+			
 			String pw =in.readLine();
 			
-			if(pw.contains("123456") )
+			if(pw.contains("1234") )
 			{
 				out.println("Ready");
+				kontrolle();
+				
 			}
 			else
 			{
@@ -46,7 +50,8 @@ public class ThreadServer extends Thread {
 			{
 				
 			}
-			Thread.sleep(2000);
+				
+			
 			out.close();
 		    in.close();
 			
@@ -55,4 +60,23 @@ public class ThreadServer extends Thread {
     	    e.printStackTrace();
     	}
 	}
+/////////hier Methoden
+	
+	public void kontrolle() throws IOException
+	{
+	String ware=in.readLine();	
+	String anzahl= in.readLine();
+	
+	/*try {	////nachgucken ob ware vorhanden
+
+		ResultSet results = stmt.executeQuery("SELECT Ware FROM "+ tabelle);
+	}
+	
+	
+	*/
+	
+	}
+
+
+
 }

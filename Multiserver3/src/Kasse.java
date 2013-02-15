@@ -41,8 +41,12 @@ public class Kasse {
 		System.out.println(text);
  		String pw =sc.next();	
  		out.println(pw);
-	
-	
+ 		text =in.readLine();
+ 		System.out.println(text);
+ 		if(text.contains("Ready"))
+ 		{
+ 			eingabeW();
+ 		}
 	}
 	
 	public void bezahlen()
@@ -52,7 +56,13 @@ public class Kasse {
 	
 	public void eingabeW()
 	{
-		
+		System.out.println("Bitte Waren scannen:");
+		String ware =sc.next();
+		out.println(ware);
+		System.out.println("Bitte Anzahl angeben:");
+		String anzahl = sc.next();
+		out.println(anzahl);
+			
 	}
 	
 	public void loschenW()
