@@ -13,7 +13,7 @@ public class Kasse {
 	{
 		while(true)
 		{
-		 clientSocket = new Socket("localhost", 2343);
+		 clientSocket = new Socket("localhost", 2341);
 
 		 out = new PrintWriter(clientSocket.getOutputStream(), true);
  		in = new BufferedReader(
@@ -45,26 +45,16 @@ public class Kasse {
  		System.out.println(text);
  		if(text.contains("Ready"))
  		{
- 			eingabeW();
+ 			//eingabeW();
  		}
 	}
+	
+	
 	
 	public void bezahlen()
 	{
 		
 	}
-	
-	public void eingabeW()
-	{
-		System.out.println("Bitte Waren scannen:");
-		String ware =sc.next();
-		out.println(ware);
-		System.out.println("Bitte Anzahl angeben:");
-		String anzahl = sc.next();
-		out.println(anzahl);
-			
-	}
-	
 	public void loschenW()
 	{
 	

@@ -1,14 +1,17 @@
 import java.net.*;
 import java.io.*;
 
+
 public class mainServer {
+	
 	
 	mainServer() throws IOException
 	 {
 		 ServerSocket serverSocket= null;
 		 boolean listeningSocket = true;
 		 try {
-	            serverSocket = new ServerSocket(2343);
+	            serverSocket = new ServerSocket(2341);
+	            
 	        } catch (IOException e) {
 	            System.err.println("Could not listen on port: 2343");
 	        }
@@ -24,6 +27,7 @@ public class mainServer {
 	    }
 	 
 
+	
 	public static void main(String[] args)
 	 {
 		 try 
