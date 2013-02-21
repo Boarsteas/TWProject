@@ -25,10 +25,10 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`Ware` (
   `WPreis` VARCHAR(45) NULL ,
   `LID` INT NULL ,
   PRIMARY KEY (`WID`) ,
-  INDEX `LID_idx` () ,
+  INDEX `LID_idx` (`LID` ASC) ,
   CONSTRAINT `LID`
-    FOREIGN KEY ()
-    REFERENCES `mydb`.`Lager` ()
+    FOREIGN KEY (`LID` )
+    REFERENCES `mydb`.`Lager` (`LID` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -55,10 +55,10 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`Kunde` (
   `KName` VARCHAR(45) NULL ,
   `KAID` INT NULL ,
   PRIMARY KEY (`KID`) ,
-  INDEX `KAID_idx` () ,
+  INDEX `KAID_idx` (`KAID` ASC) ,
   CONSTRAINT `KAID`
-    FOREIGN KEY ()
-    REFERENCES `mydb`.`KAdresse` ()
+    FOREIGN KEY (`KAID` )
+    REFERENCES `mydb`.`KAdresse` (`KAID` )
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -73,16 +73,16 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`Warenkorb` (
   `WMenge` INT NULL ,
   `KID` INT NULL ,
   PRIMARY KEY (`KorbID`) ,
-  INDEX `WID_idx` () ,
-  INDEX `KID_idx` () ,
+  INDEX `WID_idx` (`WID` ASC) ,
+  INDEX `KID_idx` (`KID` ASC) ,
   CONSTRAINT `WID`
-    FOREIGN KEY ()
-    REFERENCES `mydb`.`Ware` ()
+    FOREIGN KEY (`WID` )
+    REFERENCES `mydb`.`Ware` (`WID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `KID`
-    FOREIGN KEY ()
-    REFERENCES `mydb`.`Kunde` ()
+    FOREIGN KEY (`KID` )
+    REFERENCES `mydb`.`Kunde` (`KID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -97,10 +97,10 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`Kasse` (
   `KAAnfBest` INT NULL ,
   `KorbID` INT NULL ,
   PRIMARY KEY (`KNr`) ,
-  INDEX `KorbID_idx` () ,
+  INDEX `KorbID_idx` (`KorbID` ASC) ,
   CONSTRAINT `KorbID`
-    FOREIGN KEY ()
-    REFERENCES `mydb`.`Warenkorb` ()
+    FOREIGN KEY (`KorbID` )
+    REFERENCES `mydb`.`Warenkorb` (`KorbID` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
