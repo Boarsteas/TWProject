@@ -1,6 +1,7 @@
 import java.net.*;
 import java.sql.*;
 import java.io.*;
+
 import com.mysql.jdbc.Driver;
 
 public class ThreadServer extends Thread {
@@ -23,11 +24,15 @@ public class ThreadServer extends Thread {
 	    			    socket.getInputStream()));
 	    		
 	    		////////////Verbindung zu Datenbank
+	    		try{
 	    		Class.forName("com.mysql.jdbc.Driver");
-	    		Connection con = DriverManager.getConnection( "jdbc:mysql://localhost/firma","root","" );
+	    		Connection con = DriverManager.getConnection( "jdbc:mysql://localhost/mydb","root","" );
 	    		System.out.println("Verbindung erfolgreich hergestellt !");
 	    		stmt = con.createStatement();
-	    		
+	    		}
+	    		catch (SQLException sqle) {
+	    			System.out.println(sqle.toString());
+	    			}
 	    	} catch (Exception e) {
 	    	    e.printStackTrace();
 	    	}
@@ -39,7 +44,7 @@ public class ThreadServer extends Thread {
 			
 			String Id = in.readLine();
 			int intId = Integer.parseInt(Id);
-			if(intId>500 && intId<1000)
+			if(intId>500 && intId<1000) //////Kassse
 			{
 			out.println("Bitte vierstelligen Passwort eingeben:");
 			
@@ -57,10 +62,10 @@ public class ThreadServer extends Thread {
 			}
 			
 			}
-			else
+			else ///////Infostand
 			{
 				
-				
+				schreibeDb();
 				
 				
 				
@@ -89,14 +94,32 @@ public class ThreadServer extends Thread {
 public void schreibeDb() throws IOException
 {
 	try {
+		zeigeWaren();
 		String text=in.readLine();	
-		stmt.executeQuery(text);
-	} catch (SQLException e) {
+		System.out.println(text);
+		stmt.execute(text);
+	} catch ( SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	
 }
+public void zeigeWaren() throws IOException
+{
+	String waren = in.readLine();
+	System.out.println(waren);
+	try {
+		ResultSet results =stmt.executeQuery(waren);
+		while ( results.next() ){
+			out.println("WarenID\t Warenname\t Warenmenge");
+			out.println(results.getString(1)+"\t"+results.getString(2)+"\t"+ results.getString(3) );
+			}
+		//out.println(results);
+	} catch (SQLException sqle) {
+		// TODO Auto-generated catch block
+		System.out.println(sqle.toString());
+	}
 	
+}
 
 }

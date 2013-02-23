@@ -23,7 +23,7 @@ public class Infostand {
  		 out.println(id);
 	      //  String text = in.readLine();
 	       // System.out.println(text);
-	        out.println("Ja hallo ich bin da");
+	        
 	        //out.close();
 		    //in.close();
 	        eingabeW();
@@ -35,15 +35,20 @@ public class Infostand {
 		clientSocket.close();
 	}
 	
-	public void zeigeWarenstand()
+	public void zeigeWarenstand() throws IOException
 	{
-		String text = ("SELECT WName AS Ware,WPreis AS Preis,WID AS WarenID FROM Waren");
-		out.write(text);
+		String text = ("SELECT WID AS WarenID,WName AS Ware,WPreis AS Preis FROM ware;");
+		out.println(text);
+		String satz = in.readLine();
+		System.out.println(satz);
+		String waren = in.readLine();
+		System.out.println(waren);
 	}
-	public void eingabeW()
+	public void eingabeW() throws IOException
 	{
+		zeigeWarenstand();
 		
-		System.out.println("Bitte WarenID eingeben:");
+		System.out.println("\nBitte WarenID eingeben:");
 		String wareid =sc.next();
 		////
 		System.out.println("Bitte Anzahl angeben:");
@@ -51,11 +56,12 @@ public class Infostand {
 		/////
 		System.out.println("Sind sie mit dem einkauf fertig(1)? Möchten sie was ändern(2) oder löschen(3)");
 		String wahl= sc.next();
-		String text= ("INSERT INTO Warenkorb VALUES("+wareid+","+anzahl+")");
+		String text= ("INSERT INTO warenkorb (KorbID,WID,WMenge) VALUES(1,"+wareid+","+anzahl+")");
 		out.println(text);
+		
 		if(wahl.contains("1"))
 		{
-		System.out.println("Siw erden zur kasse weitergeleitet......");
+		System.out.println("Sie erden zur kasse weitergeleitet......");
 		
 		}
 		if(wahl.contains("2") )
