@@ -98,6 +98,7 @@ public void schreibeDb() throws IOException
 		String text=in.readLine();	
 		System.out.println(text);
 		stmt.execute(text);
+		System.out.println("Update erfolgreich durchgeführt!");
 	} catch ( SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -110,10 +111,12 @@ public void zeigeWaren() throws IOException
 	System.out.println(waren);
 	try {
 		ResultSet results =stmt.executeQuery(waren);
+		out.println("WarenID\t Warenname\t Warenpreis");
 		while ( results.next() ){
-			out.println("WarenID\t Warenname\t Warenmenge");
+			
 			out.println(results.getString(1)+"\t"+results.getString(2)+"\t"+ results.getString(3) );
 			}
+		out.println("ende");
 		//out.println(results);
 	} catch (SQLException sqle) {
 		// TODO Auto-generated catch block

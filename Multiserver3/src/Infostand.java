@@ -26,7 +26,7 @@ public class Infostand {
 	        
 	        //out.close();
 		    //in.close();
-	        eingabeW();
+	        ichwillmichanmelden();
 	       kassegreif = new Kasse();
 	       
 	        break;
@@ -41,8 +41,21 @@ public class Infostand {
 		out.println(text);
 		String satz = in.readLine();
 		System.out.println(satz);
+		/////////
+		int warenzahl;
+		boolean listener= true;
+		while(listener){
 		String waren = in.readLine();
-		System.out.println(waren);
+		warenzahl=waren.length();
+		if(waren.equalsIgnoreCase("ende")){
+			listener=false;
+			
+			
+		}else
+			System.out.println(waren);
+		
+		}
+	
 	}
 	public void eingabeW() throws IOException
 	{
@@ -70,7 +83,11 @@ public class Infostand {
 		}
 	}
 	
-	
+	public void ichwillmichanmelden() throws IOException
+	{
+		System.out.println("Hallo lieber Kunde wollen sie sich anmelden(1) oder neu registrieren(2) ");
+		eingabeW();
+	}
 	public static void main(String[] args)
 	 {
 		 try 
