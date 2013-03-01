@@ -65,7 +65,7 @@ public class ThreadServer extends Thread {
 			else ///////Infostand
 			{
 				
-				schreibeDb();
+				schreibeWakorb();
 				
 				
 				
@@ -91,7 +91,7 @@ public class ThreadServer extends Thread {
 		out.write(text);
 	
 	}
-public void schreibeDb() throws IOException
+public void schreibeWakorb() throws IOException
 {
 	try {
 		zeigeWaren();
@@ -99,6 +99,17 @@ public void schreibeDb() throws IOException
 		System.out.println(text);
 		stmt.execute(text);
 		System.out.println("Update erfolgreich durchgeführt!");
+		String wahl =in.readLine();
+		System.out.println("Die wahl:"+wahl);
+		if(wahl.contains("1"))////Kasseweiterleiten
+		{
+		System.out.println("kasse weiterleiten");
+		}
+		if(wahl.contains("2"))//// Warenkorb ändern
+		{
+			zeigeWarenkorb();
+		}
+		
 	} catch ( SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -124,5 +135,21 @@ public void zeigeWaren() throws IOException
 	}
 	
 }
-
+public void zeigeWarenkorb()
+{
+	String text = ("SELECT w.WID AS WarenID,w.WMenge,wa.WPreis FROM warenkorb w, ware wa group by w.WID;");
+	try {
+		ResultSet results =stmt.executeQuery(text);
+		
+		while ( results.next() ){
+			
+			out.println(results.getString(1)+"\t"+results.getString(2)+"\t"+ results.getString(3) );
+			}
+		out.println("ende");
+	}
+	catch (SQLException sqle) {
+		// TODO Auto-generated catch block
+		System.out.println(sqle.toString());
+	}
+}
 }

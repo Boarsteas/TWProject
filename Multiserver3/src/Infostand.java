@@ -67,22 +67,36 @@ public class Infostand {
 		System.out.println("Bitte Anzahl angeben:");
 		String anzahl = sc.next();
 		/////
-		System.out.println("Sind sie mit dem einkauf fertig(1)? Möchten sie was ändern(2) oder löschen(3)");
-		String wahl= sc.next();
 		String text= ("INSERT INTO warenkorb (KorbID,WID,WMenge) VALUES(1,"+wareid+","+anzahl+")");
 		out.println(text);
+		//////
+		System.out.println("Sind sie mit dem Einkauf fertig(1)? Möchten sie was ändern bzw. löschen(2)");
+		String wahl= sc.next();
 		
 		if(wahl.contains("1"))
 		{
-		System.out.println("Sie erden zur kasse weitergeleitet......");
-		
+		System.out.println("Sie werden zur kasse weitergeleitet......");
+		out.println("1");
 		}
 		if(wahl.contains("2") )
 		{
-			eingabeW();
-		}
-	}
+			out.println("2");
+			System.out.println("WarenID\t Warenmenge\t Warenpreis");
+			boolean listener= true;
+			while(listener){
+			String warenkorb = in.readLine();
+			
+			if(warenkorb.equalsIgnoreCase("ende")){
+				listener=false;
+				
+				
+			}else{
+				System.out.println(warenkorb);
+			}
 	
+	}
+		}
+	}		
 	public void ichwillmichanmelden() throws IOException
 	{
 		System.out.println("Hallo lieber Kunde wollen sie sich anmelden(1) oder neu registrieren(2) ");
