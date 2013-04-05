@@ -9,6 +9,7 @@ public class Infostand {
 	Kasse kassegreif;
 	Scanner sc =new Scanner(System.in);
 	int id = 1005;
+	String kID= null;
 	
 	Infostand() throws IOException
 	{
@@ -27,7 +28,8 @@ public class Infostand {
 	        
 	        //out.close();
 		    //in.close();
-	        ichwillmichanmelden();
+ 		
+ 		 ichwillmichanmelden();
 	       kassegreif = new Kasse();
 	       
 	        break;
@@ -44,7 +46,7 @@ public class Infostand {
 		if(wahl.contains("1"))
 		{
 			System.out.println("Geben sie ihre KundenID an:");
-			String kID=sc.next();
+			kID=sc.next();
 			System.out.println("Geben sie ihr Passwort ein:");
 			String pw=sc.next();
 			out.println(1);
@@ -76,6 +78,10 @@ public class Infostand {
 		registration();
 		}
 		}
+	
+	
+	
+	
 	/////////////
 	public void registration() throws IOException{
 		
@@ -119,6 +125,10 @@ System.out.println(KID);
 System.out.println("Bitte bewahren sie ihre kundennummer auf.");
 
 	}
+	
+	
+	
+	
 	////////
 	public void zeigeWarenstand() throws IOException ///Zeigt welche Waren es gibt
 	{
@@ -153,7 +163,7 @@ System.out.println("Bitte bewahren sie ihre kundennummer auf.");
 		System.out.println("Bitte Anzahl angeben:");
 		String anzahl = sc.next();
 		/////
-		String text= ("INSERT INTO warenkorb (KorbID,WID,WMenge) VALUES("+korbID()+","+wareid+","+anzahl+")");
+		String text= ("INSERT INTO warenkorb (KorbID,WID,WMenge,KID) VALUES("+korbID()+","+wareid+","+anzahl+","+kID+")");
 		out.println(text);
 		//////
 		System.out.println("Sind sie mit dem Einkauf fertig(1)? Möchten sie was ändern bzw. löschen(2)");
@@ -167,7 +177,7 @@ System.out.println("Bitte bewahren sie ihre kundennummer auf.");
 		if(wahl.contains("2") )
 		{
 			out.println("2");
-			System.out.println("WarenID\t Warenmenge\t Warenpreis");
+			System.out.println("WarenID\t Warenmenge\t Warenpreis\t KundenID");
 			boolean listener= true;
 			while(listener){
 			String warenkorb = in.readLine();

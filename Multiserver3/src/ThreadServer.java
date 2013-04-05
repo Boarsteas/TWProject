@@ -12,6 +12,8 @@ public class ThreadServer extends Thread {
 	static Statement stmt = null;
 	ResultSet rs = null;
 	private int ant=0;
+	String kID= null;
+	
 	public ThreadServer(Socket socket) {
 
 	        super("ThreadServer");
@@ -98,7 +100,7 @@ public void kontrolle() throws IOException
 	{
 	String pw1 =null;
 	String ktestID=null;
-	String kID = in.readLine();
+	kID = in.readLine();
 	String text=("Select KID from kunde where KID="+kID);
 	try {
 		ResultSet results =stmt.executeQuery(text);
@@ -230,13 +232,13 @@ public void zeigeWaren() throws IOException
 }
 public void zeigeWarenkorb()
 {
-	String text = ("SELECT k.WID,k.WMenge,w.WPreis FROM ware w, warenkorb k where k.WID=w.WID;");
+	String text = ("SELECT k.WID,k.WMenge,w.WPreis,k.KID FROM ware w, warenkorb k where k.WID=w.WID and k.KID="+kID+";");
 	try {
 		ResultSet results =stmt.executeQuery(text);
 		
 		while ( results.next() ){
 			
-			out.println(results.getString(1)+"\t"+results.getString(2)+"\t"+ results.getString(3) );
+			out.println(results.getString(1)+"\t"+results.getString(2)+"\t"+ results.getString(3) +"\t"+ results.getString(4));
 			}
 		out.println("ende");
 	}
