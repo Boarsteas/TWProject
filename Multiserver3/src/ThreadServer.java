@@ -11,7 +11,7 @@ public class ThreadServer extends Thread {
 	Connection con = null;
 	static Statement stmt = null;
 	ResultSet rs = null;
-	
+	private int ant=0;
 	public ThreadServer(Socket socket) {
 
 	        super("ThreadServer");
@@ -37,6 +37,7 @@ public class ThreadServer extends Thread {
 	    	    e.printStackTrace();
 	    	}
 	    }
+///////////////////
 	public void run() {   	
 		try {
 			//if (!in.ready())
@@ -50,10 +51,13 @@ public class ThreadServer extends Thread {
 			
 			String pw =in.readLine();
 			
-			if(pw.contains("1234") )
+			if(pw.contains("1234") )//////// kasse
 			{
 				out.println("Ready");
-				kontrolle();
+			
+				
+				//kontrolle();
+				zeigeWarenkorb();
 				
 			}
 			else
@@ -62,13 +66,21 @@ public class ThreadServer extends Thread {
 			}
 			
 			}
+			
+			////////////////////
 			else ///////Infostand
 			{
-				
+				String antw=in.readLine();
+				ant = Integer.parseInt(antw);
+				if(ant==1) /////Kunde hat sich angemeldet
+				{  
+				kontrolle();
 				schreibeWakorb();
-				
-				
-				
+				}
+				if(ant==2)///////neuKunde möchte sich registrieren
+				{
+					registration();
+				}
 			}
 				
 			
@@ -82,19 +94,100 @@ public class ThreadServer extends Thread {
 	}
 /////////hier Methoden
 	
-	public void kontrolle() throws IOException
+public void kontrolle() throws IOException
 	{
-	String ware=in.readLine();	
-	String anzahl= in.readLine();
+	String pw1 =null;
+	String ktestID=null;
+	String kID = in.readLine();
+	String text=("Select KID from kunde where KID="+kID);
+	try {
+		ResultSet results =stmt.executeQuery(text);
+		while ( results.next() ){
+			
+			ktestID= results.getString(1);
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		out.println("Bitte registrieren Sie sich");
+	}
+	/////
+	 
+	if(ktestID!=null)
+	{
+	String pw= in.readLine();
+	String text1 =("Select Passwort from kunde where KID="+kID);
+	try {
+		ResultSet results1 =stmt.executeQuery(text1);
+		while ( results1.next() ){
+		
+		 pw1= results1.getString(1);
+		 System.out.println(pw1);
+		
+		}
+		if(pw1.equals(pw))
+		{
+			
+			out.println("Sie sind angemeldet.");
+		}
 	
-	String text = ("SELECT Ware FROM Waren");
-		out.write(text);
+		else{
+			out.println("Falsches Passwort. Versuch Sie es noch einmal.");
+		}
+		
+		
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	}
+	///////
+	else
+	{System.out.println("halo");
+	out.println("Bitte registrieren Sie sich");
 	
 	}
-public void schreibeWakorb() throws IOException
+	}
+
+//////////////////////////
+
+public void registration() throws IOException
+	{
+	
+	
+	try {
+		String selectkaid= in.readLine();
+	System.out.println(selectkaid);
+		ResultSet results =stmt.executeQuery(selectkaid);
+while ( results.next() ){
+			
+			out.println(results.getString(1));
+			
+			break;
+			}
+		String insertkadresse= in.readLine();
+		System.out.println(insertkadresse);
+		stmt.execute(insertkadresse);
+		
+		String insertkunde= in.readLine();
+		System.out.println(insertkunde);
+		stmt.execute(insertkunde);
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	                                                                                                
+	}
+	
+	
+	///////Infostand eingabeW() zum eingeben der Waren in den Warenkorb
+	public void schreibeWakorb() throws IOException
 {
 	try {
 		zeigeWaren();
+		korbID();
 		String text=in.readLine();	
 		System.out.println(text);
 		stmt.execute(text);
@@ -137,7 +230,7 @@ public void zeigeWaren() throws IOException
 }
 public void zeigeWarenkorb()
 {
-	String text = ("SELECT w.WID AS WarenID,w.WMenge,wa.WPreis FROM warenkorb w, ware wa group by w.WID;");
+	String text = ("SELECT k.WID,k.WMenge,w.WPreis FROM ware w, warenkorb k where k.WID=w.WID;");
 	try {
 		ResultSet results =stmt.executeQuery(text);
 		
@@ -152,4 +245,28 @@ public void zeigeWarenkorb()
 		System.out.println(sqle.toString());
 	}
 }
+public void korbID() throws IOException  ///zum ändern der KorbID
+{
+	String korbID = in.readLine();
+	System.out.println(korbID);	
+	try {
+		ResultSet results =stmt.executeQuery(korbID);
+		while ( results.next() ){
+				out.println(results.getString(1));
+			}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		System.out.println(e.toString());
+	}
+
+}
+public int kundenid(){
+	String KID=("Select KID from kunde order by KID desc limit 1");
+	int kuID = Integer.parseInt(KID);
+	kuID=kuID+1;
+	return kuID;
+}
+
+
+
 }

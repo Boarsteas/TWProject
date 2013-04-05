@@ -9,6 +9,7 @@ public class Infostand {
 	Kasse kassegreif;
 	Scanner sc =new Scanner(System.in);
 	int id = 1005;
+	
 	Infostand() throws IOException
 	{
 		while(true)
@@ -35,7 +36,91 @@ public class Infostand {
 		clientSocket.close();
 	}
 	
-	public void zeigeWarenstand() throws IOException
+	/////////
+	public void ichwillmichanmelden() throws IOException///////////Ob Kunde sich anmelden oder registrieren möchte
+	{
+		System.out.println("Hallo lieber Kunde wollen sie sich anmelden(1) oder neu registrieren(2) ");
+		String wahl= sc.next();
+		if(wahl.contains("1"))
+		{
+			System.out.println("Geben sie ihre KundenID an:");
+			String kID=sc.next();
+			System.out.println("Geben sie ihr Passwort ein:");
+			String pw=sc.next();
+			out.println(1);
+			//////vorher hier kontrolle ob Kunde existiert
+			out.println(kID);
+			out.println(pw);
+			String antw= in.readLine();
+			System.out.println(antw);
+			if(antw.contains("Sie sind angemeldet."))
+			{
+				eingabeW();
+			}
+			
+			if(antw.contains("Falsche Passwort. Versuch Sie es noch einmal."))
+			{
+				ichwillmichanmelden();	
+			}
+			//////////Wareneingabe und aussuche	
+			if(antw.contains("Bitte registrieren Sie sich"))
+			{
+				
+				ichwillmichanmelden();
+			}
+		}
+		if(wahl.contains("2"))
+		{
+		
+		out.println(2);
+		registration();
+		}
+		}
+	/////////////
+	public void registration() throws IOException{
+		
+		System.out.println("Geben sie ihren Vornamen ein:");
+	String VName=sc.next();
+	
+	System.out.println("Geben sie ihren Nachnamen ein");
+String NName=sc.next();
+
+System.out.println("Geben sie ihre Passwort");
+String PW=sc.next();
+int neuPW = Integer.parseInt(PW);
+
+
+
+System.out.println("Geben sie ihren Wohnort ein: \n Ort");
+String Livingplaceofdoom=sc.next();
+System.out.println("PLZ:");
+String PLZ=sc.next();
+
+System.out.println("Geben sie ihre Strasse+Hausnummer");
+String Str=sc.next();
+
+/////////neue KAID
+String selectkaid = ("SELECT KAID FROM kadresse order by KAID desc limit 1;");
+out.println(selectkaid);
+
+String kaid = in.readLine();
+int kaidint = Integer.parseInt(kaid);
+kaidint=kaidint+1;                      
+System.out.println(kaidint);
+String insertkadresse = ("INSERT INTO kadresse (KAID,KOrt,KPLZ,KStrasse) Values ("+kaidint+",'"+Livingplaceofdoom+"','"+PLZ+"','"+Str+"') ");
+out.println(insertkadresse);
+
+String insertkunde = ("INSERT INTO kunde (KID,KVorname,KName,Passwort,KAID) Values (2,'"+VName+"','"+NName+"',"+neuPW+","+kaidint+") ");
+out.println(insertkunde);
+
+System.out.println("Ihre Kundennummer ist:");
+String KID=in.readLine();
+System.out.println(KID);
+System.out.println("Bitte bewahren sie ihre kundennummer auf.");
+
+	}
+	////////
+	public void zeigeWarenstand() throws IOException ///Zeigt welche Waren es gibt
 	{
 		String text = ("SELECT WID AS WarenID,WName AS Ware,WPreis AS Preis FROM ware;");
 		out.println(text);
@@ -57,17 +142,18 @@ public class Infostand {
 		}
 	
 	}
-	public void eingabeW() throws IOException
+	////////////
+	public void eingabeW() throws IOException//////Zum eingeben der Waren
 	{
 		zeigeWarenstand();
-		
+		/////
 		System.out.println("\nBitte WarenID eingeben:");
 		String wareid =sc.next();
 		////
 		System.out.println("Bitte Anzahl angeben:");
 		String anzahl = sc.next();
 		/////
-		String text= ("INSERT INTO warenkorb (KorbID,WID,WMenge) VALUES(1,"+wareid+","+anzahl+")");
+		String text= ("INSERT INTO warenkorb (KorbID,WID,WMenge) VALUES("+korbID()+","+wareid+","+anzahl+")");
 		out.println(text);
 		//////
 		System.out.println("Sind sie mit dem Einkauf fertig(1)? Möchten sie was ändern bzw. löschen(2)");
@@ -88,20 +174,38 @@ public class Infostand {
 			
 			if(warenkorb.equalsIgnoreCase("ende")){
 				listener=false;
-				
+				nochmal();
 				
 			}else{
 				System.out.println(warenkorb);
 			}
-	
+			
+			
 	}
 		}
 	}		
-	public void ichwillmichanmelden() throws IOException
+	///////////
+	public int korbID() throws IOException ///zum ändern der KorbID damit mehr Waren in den Warenkorb kommen
 	{
-		System.out.println("Hallo lieber Kunde wollen sie sich anmelden(1) oder neu registrieren(2) ");
+		String text = ("SELECT KorbID FROM warenkorb order by KorbID desc limit 1;");
+		out.println(text);
+		String korbID = in.readLine();
+		int kID = Integer.parseInt(korbID);
+		kID=kID+1;
+		return kID;
+	}
+	
+	
+	
+	
+	public void nochmal() throws IOException
+	{
 		eingabeW();
 	}
+	
+	
+	
+	
 	public static void main(String[] args)
 	 {
 		 try 

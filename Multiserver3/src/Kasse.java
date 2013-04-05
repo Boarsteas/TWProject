@@ -8,6 +8,7 @@ public class Kasse {
 	Socket clientSocket=null;
 	Scanner sc =new Scanner(System.in);
 	private int id =600;
+
 	
 	Kasse() throws IOException
 	{
@@ -19,7 +20,7 @@ public class Kasse {
  		in = new BufferedReader(
  			    new InputStreamReader(
  			    		clientSocket.getInputStream()));
-
+ 		
  		
  		
 	      //  String text = in.readLine();
@@ -45,12 +46,31 @@ public class Kasse {
  		System.out.println(text);
  		if(text.contains("Ready"))
  		{
- 			//eingabeW();
+ 			
+ 			zeigeWarenkorb();
+ 			
  		}
 	}
 	
 	
 	
+	public void zeigeWarenkorb() throws IOException
+	{
+		System.out.println("WarenID\t Warenmenge\t Warenpreis");
+		boolean listener= true;
+		while(listener){
+		String warenkorb = in.readLine();
+		
+		if(warenkorb.equalsIgnoreCase("ende")){
+			listener=false;
+			
+			
+		}else{
+			System.out.println(warenkorb);
+		}
+		
+	}
+	}
 	public void bezahlen()
 	{
 		
