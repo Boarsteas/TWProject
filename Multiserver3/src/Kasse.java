@@ -48,7 +48,7 @@ public class Kasse {
  		{
  			
  			zeigeWarenkorb();
- 			
+ 			bezahlen(); 
  		}
 	}
 	
@@ -71,13 +71,15 @@ public class Kasse {
 		
 	}
 	}
-	public void bezahlen()
+	public void bezahlen() throws IOException
 	{
-		
-	}
-	public void loschenW()
-	{
-	
+	System.out.println("Geben Sie die KundenID ein:");
+	String kid= sc.next();
+	String bez=("Select sum(w.WPreis) from Ware w, warenkorb wa where wa.WID=w.WID and wa.KID="+kid);
+	String inbez= in.readLine();
+	System.out.println("Der kunde muss:"+inbez);
+	String leeren=("Delete from warenkorb where KID="+kid);
+	System.out.println("kauf abgeschlossen!!!!");
 	}
 	
 	public static void main(String[] args)

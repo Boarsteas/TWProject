@@ -30,7 +30,7 @@ public class Infostand {
 		    //in.close();
  		
  		 ichwillmichanmelden();
-	       kassegreif = new Kasse();
+	       
 	       
 	        break;
 	         
@@ -152,6 +152,8 @@ System.out.println("Bitte bewahren sie ihre kundennummer auf.");
 		}
 	
 	}
+	
+	
 	////////////
 	public void eingabeW() throws IOException//////Zum eingeben der Waren
 	{
@@ -163,15 +165,24 @@ System.out.println("Bitte bewahren sie ihre kundennummer auf.");
 		System.out.println("Bitte Anzahl angeben:");
 		String anzahl = sc.next();
 		/////
-		String text= ("INSERT INTO warenkorb (KorbID,WID,WMenge,KID) VALUES("+korbID()+","+wareid+","+anzahl+","+kID+")");
+		String text= ("INSERT INTO warenkorb (KorbID,WID,WMenge,KID,preis) VALUES("+korbID()+","+wareid+","+anzahl+","+kID+",null)");
 		out.println(text);
 		//////
+		///////
+		String holepreis=("Select WPreis from ware where WID="+wareid);
+		out.println(holepreis);
+		
+		//////
+		String holemenge= ("Select WMenge from warenkorb where WID="+wareid);
+		out.println(holemenge);
+		out.println(wareid);
+		////////
 		System.out.println("Sind sie mit dem Einkauf fertig(1)? Möchten sie was ändern bzw. löschen(2)");
 		String wahl= sc.next();
 		
 		if(wahl.contains("1"))
 		{
-		System.out.println("Sie werden zur kasse weitergeleitet......");
+		System.out.println("Sie werden zur Kasse weitergeleitet......");
 		out.println("1");
 		}
 		if(wahl.contains("2") )
@@ -184,15 +195,24 @@ System.out.println("Bitte bewahren sie ihre kundennummer auf.");
 			
 			if(warenkorb.equalsIgnoreCase("ende")){
 				listener=false;
-				nochmal();
 				
+				System.out.println("Wählen sie die Ware. Geben sie die WarenID ein:");
+				String warenid= sc.next();
+				System.out.println("Bitte geben sie die neue Menge ein:");
+				String menge= sc.next();
+				if(menge.contains("0")){
+					loschen(warenid);
+				}
+				else{
+					String andern=("Update warenkorb set WMenge="+menge+"where WID="+warenid);
+					out.println(andern);
+				}
 			}else{
 				System.out.println(warenkorb);
 			}
-			
-			
-	}
 		}
+		}
+		
 	}		
 	///////////
 	public int korbID() throws IOException ///zum ändern der KorbID damit mehr Waren in den Warenkorb kommen
@@ -213,8 +233,16 @@ System.out.println("Bitte bewahren sie ihre kundennummer auf.");
 		eingabeW();
 	}
 	
-	
-	
+	public void loschen(String warenid){
+		String loschen=("Delete From warenkorb where"+warenid);
+		out.println(loschen);
+	}
+	public void abmelden() throws IOException
+	{
+		clientSocket.close();
+		
+		
+	}
 	
 	public static void main(String[] args)
 	 {

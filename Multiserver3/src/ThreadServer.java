@@ -53,6 +53,7 @@ public class ThreadServer extends Thread {
 			
 			String pw =in.readLine();
 			
+			/////////////////////
 			if(pw.contains("1234") )//////// kasse
 			{
 				out.println("Ready");
@@ -60,7 +61,7 @@ public class ThreadServer extends Thread {
 				
 				//kontrolle();
 				zeigeWarenkorb();
-				
+				bezahlen();
 			}
 			else
 			{
@@ -96,6 +97,7 @@ public class ThreadServer extends Thread {
 	}
 /////////hier Methoden
 	
+
 public void kontrolle() throws IOException
 	{
 	String pw1 =null;
@@ -183,17 +185,18 @@ while ( results.next() ){
 	                                                                                                
 	}
 	
-	
+	////////
 	///////Infostand eingabeW() zum eingeben der Waren in den Warenkorb
 	public void schreibeWakorb() throws IOException
 {
 	try {
 		zeigeWaren();
 		korbID();
-		String text=in.readLine();	
-		System.out.println(text);
-		stmt.execute(text);
+		String insertware=in.readLine();	
+		System.out.println(insertware);
+		stmt.execute(insertware);
 		System.out.println("Update erfolgreich durchgeführt!");
+		holepreis();
 		String wahl =in.readLine();
 		System.out.println("Die wahl:"+wahl);
 		if(wahl.contains("1"))////Kasseweiterleiten
@@ -203,6 +206,7 @@ while ( results.next() ){
 		if(wahl.contains("2"))//// Warenkorb ändern
 		{
 			zeigeWarenkorb();
+			andern();
 		}
 		
 	} catch ( SQLException e) {
@@ -230,9 +234,11 @@ public void zeigeWaren() throws IOException
 	}
 	
 }
+
+////////////////////
 public void zeigeWarenkorb()
 {
-	String text = ("SELECT k.WID,k.WMenge,w.WPreis,k.KID FROM ware w, warenkorb k where k.WID=w.WID and k.KID="+kID+";");
+	String text = ("SELECT k.WID,k.WMenge,k.preis,w.WName FROM ware w, warenkorb k where k.WID=w.WID and k.KID="+kID+";");
 	try {
 		ResultSet results =stmt.executeQuery(text);
 		
@@ -247,6 +253,9 @@ public void zeigeWarenkorb()
 		System.out.println(sqle.toString());
 	}
 }
+
+
+/////////////////////////
 public void korbID() throws IOException  ///zum ändern der KorbID
 {
 	String korbID = in.readLine();
@@ -268,7 +277,79 @@ public int kundenid(){
 	kuID=kuID+1;
 	return kuID;
 }
+//////////////////kassse bezahlen
+private void bezahlen() throws IOException, SQLException {
+	String bez = in.readLine();
+	try {
+		ResultSet results =stmt.executeQuery(bez);
+		while ( results.next() ){
+				out.println(results.getString(1));
+			}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		System.out.println(e.toString());
+	}
+
+String leeren= in.readLine();
+stmt.executeQuery(leeren);
+
+}
+
+//////////////////////zum ändern vom warenkorb
+public void andern() throws IOException
+{
+	String befehl = in.readLine();
+	try {
+		stmt.executeQuery(befehl);
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		System.out.println(e.toString());
+	}
+}
 
 
+/////////////////////hole Preis
+public void holepreis() throws IOException
+{
+String preis = in.readLine();
+float menge2 = 0;
+float preis2 = 0;
+try {
+	ResultSet results =stmt.executeQuery(preis);
+	while ( results.next() ){
+		String preis1=results.getString(1);
+		 preis2 = Float.parseFloat(preis1);
+	}
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	System.out.println(e.toString());
+}
+////
+String menge = in.readLine();
+try {
+	ResultSet results =stmt.executeQuery(menge);
+	while ( results.next() ){
+		String menge1=results.getString(1);
+		menge2= Float.parseFloat(menge1);
+	}
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	System.out.println(e.toString());
+}
+String wareid= in.readLine();
 
+float gespreis= preis2*menge2;
+String neupreis=("Update warenkorb set preis="+gespreis+" where WID="+wareid);
+	try {
+		stmt.execute(neupreis);
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+
+}
+
+//////////////////////Ende
 }
