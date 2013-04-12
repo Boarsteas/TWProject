@@ -188,7 +188,9 @@ System.out.println("Bitte bewahren sie ihre kundennummer auf.");
 		if(wahl.contains("2") )
 		{
 			out.println("2");
-			System.out.println("WarenID\t Warenmenge\t Warenpreis\t KundenID");
+			System.out.println("WarenID\t Warenmenge\t Warenpreis\t Produkt");
+			String wakorb = ("SELECT k.WID,k.WMenge,k.preis,w.WName FROM ware w, warenkorb k where k.WID=w.WID and k.KID="+kID+";");
+			out.println(wakorb);
 			boolean listener= true;
 			while(listener){
 			String warenkorb = in.readLine();

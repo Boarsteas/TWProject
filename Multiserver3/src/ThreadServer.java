@@ -195,6 +195,7 @@ while ( results.next() ){
 		String insertware=in.readLine();	
 		System.out.println(insertware);
 		stmt.execute(insertware);
+		System.out.println(insertware);
 		System.out.println("Update erfolgreich durchgeführt!");
 		holepreis();
 		String wahl =in.readLine();
@@ -207,6 +208,7 @@ while ( results.next() ){
 		{
 			zeigeWarenkorb();
 			andern();
+			
 		}
 		
 	} catch ( SQLException e) {
@@ -236,11 +238,12 @@ public void zeigeWaren() throws IOException
 }
 
 ////////////////////
-public void zeigeWarenkorb()
+public void zeigeWarenkorb() throws IOException
 {
-	String text = ("SELECT k.WID,k.WMenge,k.preis,w.WName FROM ware w, warenkorb k where k.WID=w.WID and k.KID="+kID+";");
+	String wakorb=in.readLine();
+	
 	try {
-		ResultSet results =stmt.executeQuery(text);
+		ResultSet results =stmt.executeQuery(wakorb);
 		
 		while ( results.next() ){
 			
@@ -279,19 +282,26 @@ public int kundenid(){
 }
 //////////////////kassse bezahlen
 private void bezahlen() throws IOException, SQLException {
+	String newbez = null;
 	String bez = in.readLine();
+	
 	try {
 		ResultSet results =stmt.executeQuery(bez);
 		while ( results.next() ){
 				out.println(results.getString(1));
+				newbez= results.getString(1);
 			}
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		System.out.println(e.toString());
 	}
+String income = ("Update kasse set KAktBest="+newbez+"+KAAnfBest");
+System.out.println(income);
+stmt.execute(income);
 
 String leeren= in.readLine();
-stmt.executeQuery(leeren);
+System.out.println(leeren);
+stmt.execute(leeren);
 
 }
 

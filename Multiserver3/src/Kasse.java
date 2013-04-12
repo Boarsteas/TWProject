@@ -8,7 +8,7 @@ public class Kasse {
 	Socket clientSocket=null;
 	Scanner sc =new Scanner(System.in);
 	private int id =600;
-
+	String kid= null;
 	
 	Kasse() throws IOException
 	{
@@ -46,7 +46,8 @@ public class Kasse {
  		System.out.println(text);
  		if(text.contains("Ready"))
  		{
- 			
+ 			System.out.println("Geben Sie die KundenID ein:");
+ 			kid= sc.next();
  			zeigeWarenkorb();
  			bezahlen(); 
  		}
@@ -57,6 +58,8 @@ public class Kasse {
 	public void zeigeWarenkorb() throws IOException
 	{
 		System.out.println("WarenID\t Warenmenge\t Warenpreis");
+		String wakorb = ("SELECT k.WID,k.WMenge,k.preis,w.WName FROM ware w, warenkorb k where k.WID=w.WID and k.KID="+kid);
+		out.println(wakorb);
 		boolean listener= true;
 		while(listener){
 		String warenkorb = in.readLine();
@@ -73,13 +76,14 @@ public class Kasse {
 	}
 	public void bezahlen() throws IOException
 	{
-	System.out.println("Geben Sie die KundenID ein:");
-	String kid= sc.next();
-	String bez=("Select sum(w.WPreis) from Ware w, warenkorb wa where wa.WID=w.WID and wa.KID="+kid);
+
+	String bez=("Select sum(preis) from warenkorb where KID="+kid);
+	out.println(bez);
 	String inbez= in.readLine();
-	System.out.println("Der kunde muss:"+inbez);
+	System.out.println("Der Kunde muss:"+inbez+"Euro bezahlen");
 	String leeren=("Delete from warenkorb where KID="+kid);
-	System.out.println("kauf abgeschlossen!!!!");
+	out.println(leeren);
+	System.out.println("Kauf abgeschlossen!!!!");
 	}
 	
 	public static void main(String[] args)

@@ -23,7 +23,7 @@ public class mainServer {
 	            mini.start();
 	            break;
 	        }       
-	       serverSocket.close();
+	       //serverSocket.close();
 	    }
 	 
 
